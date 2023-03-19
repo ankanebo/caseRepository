@@ -1,0 +1,8 @@
+function open_windows() {
+        call_to_server('/average_hum_earth_post_1', [], function(g){
+          average_hum_earth_post_alert_var_1 = g[0]
+          global_flag1 = !global_flag1
+          document.querySelector('#status_of_windows').innerHTML = (global_flag1?'Форточки открыты':'Форточки закрыты')
+          call_to_server('/close_open_window', '') - только для patch запроса
+        });
+      }

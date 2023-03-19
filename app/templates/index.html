@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block content %}
+<h3><p class="text-center">Космические фрмеры</p></h3>
+
+    <div class="container" style="margin: 15px auto;">
+      <div class="row">
+        <div class="col-6">
+          <h5>Введите дистанцию от предыдущей точки в световых годах</h5>
+          <input name="distance_from_last_point" class="form-control" type="text" placeholder="Distance">
+          <h5>Введите количество единиц SH, которые необходимо выгрузить в точке</h5>
+          <input name="amount_of_SH" class="form-control" type="text" placeholder="Amount">
+          <button onclick="write_data()" style="margin-top: 20px;" type="button" class="btn btn-warning">Записать</button>
+        </div>
+        <div class="col-6">
+          
+        </div>
+      </div>
+    </div>
+
+    <script>
+        function open_windows() {
+            
+        }
+        
+        function write_data() {
+          distance_value = document.querySelector("input[name='distance_from_last_point']").value
+          SH_value = document.querySelector("input[name='amount_of_SH']").value
+          alert('Значения успешно записаны!' + '\n' + 'Дистанция от предыдущей точки: ' + distance_value + ' световых лет' + '\n' + 'Количество единиц SH для выгрузки: ' + SH_value)
+          call_to_server('/button_input', JSON.stringify({
+            distance: distance_value,
+            sh: SH_value
+          }));
+        }
+
+
+    function call_to_server(url, data, onload) {
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", url, true);
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.send(data);
+
+      xhr.onload = function() {
+        var data_1 = JSON.parse(this.responseText);
+        console.log(data_1);
+        if (onload != null){onload(data_1);}
+      };
+    }
+    
+    
+        // var ctxP = document.getElementById("pieChart").getContext('2d');
+        // var myPieChart = new Chart(ctxP, {
+        //   type: 'pie',
+        //   data: {
+        //     labels: ["Red", "Green", "Yellow", "Grey", "Dark Grey"],
+        //     datasets: [{
+        //       data: [300, 50, 100, 40, 120],
+        //       backgroundColor: ["#F7464A", "#46BFBD", "#FDB45C", "#949FB1", "#4D5360"],
+        //       hoverBackgroundColor: ["#FF5A5E", "#5AD3D1", "#FFC870", "#A8B3C5", "#616774"]
+        //     }]
+        //   },
+        //   options: {
+        //     responsive: true
+        //   }
+        // });
+    
+        // function graph(number){    
+        //     let xhr = new XMLHttpRequest();
+        //     xhr.open('GET', '/index/temp_hum?number='+number);
+        //     xhr.send();
+        //     var paramsString = document.location.href.split("/");
+        //     console.log(paramsString[paramsString.length-1]);
+        //     xhr.onload = function() {
+        //       data = JSON.parse(xhr.response);
+        //       test1.push(data)
+        //       console.log(data)
+        //       console.log(data["date"])
+        //       console.log(data["temp"])
+        //       console.log(data["hum"])
+        //       var ctx = document.getElementById("myChart").getContext("2d");
+        //       var myChart = new Chart(ctx, {
+        //         type: "line",
+        //           data: {
+        //             labels: data["date"],
+        //             datasets: [
+        //               {
+        //                 label: "Температура, °C",
+        //                 data: data["temp"],
+        //                 backgroundColor: "rgba(153,205,1,0.6)",
+        //               },
+        //               {
+        //                 label: "Влажность, %",
+        //                 data: data["hum"],
+        //                 backgroundColor: "rgba(155,153,10,0.6)",
+        //               },
+        //             ],
+        //           },
+        //         });
+        //       };
+        //     }
+    
+      </script>
+{%endblock%}
+
